@@ -5,14 +5,22 @@ from django.conf import settings
 from django.db import models
 
 
-class BaseModel(models.Model):
-    create_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
-    delete_date = models.DateTimeField(null=True, blank=True, db_index=True)
+class Cart(models.Model):
 
-    class Meta:
-        abstract = True
-        ordering = ["pk"]
+    # Cart Model
+
+    class Meta(object):
+        verbose_name = u"Cart"
+    
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
+    place_order = models.BooleanField(default=False, verbose_name=_('Place Order'))
+
+    cart_id = models.CharField(max_length=50)
+    orders = models.ManyToMnyaField(Order)
+    products = models.ManyToMnyaField(Product)
+    coupon = models.OneToOneField(Coupon, primary_key=True)
+    subtotal = models.DecimalField(max_digits=50, decimal_places=2, verbose_name="Subtotal")
+
 
     def __unicode__(self):
-        return self.__str__()
+        return self.cart_id
