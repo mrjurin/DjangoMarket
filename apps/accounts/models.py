@@ -10,7 +10,7 @@ class User(AbstractUser):
     email = models.EmailField('Email address', unique=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = 'User'
