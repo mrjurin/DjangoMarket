@@ -26,9 +26,8 @@ class Cart(models.Model):
     create_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
     place_order = models.BooleanField(default=False, verbose_name=_('Place Order'))
 
-    orders = models.ManyToManyField(Order)
-    products = models.ManyToManyField(Product)
-    coupon = models.OneToOneField(Coupon, primary_key=True)
+    order = models.ManyToManyField(Order)
+    product = models.ManyToManyField(Product)
     subtotal_amount = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("Subtotal"))
 
     class Meta(object):
