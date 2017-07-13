@@ -7,7 +7,9 @@ from django.conf import settings
 
 class Order(models.Model):
     product = models.ManyToManyField('', max_length=45)
-# FIXME: PryimaRoman: insert location of product model
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    coupon = models.ForeignKey('')
+# FIXME: PryimaRoman: insert location of other models
     additional_information = models.TextField(max_length=450)
     quantity = models.PositiveIntegerField(null=True, blank=True)
     weight = models.FloatField(null=True, blank=True)
@@ -15,7 +17,6 @@ class Order(models.Model):
         max_digits=10, decimal_places=2, verbose_name="Full price")
     created_date = models.DateTimeField(auto_now_add=True)
     sent_date = models.DateTimeField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     payment_cash = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
