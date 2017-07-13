@@ -16,16 +16,3 @@ class BaseModel(models.Model):
 
     def __unicode__(self):
         return self.__str__()
-
-
-class Accounts(models.Model):
-    login = models.CharField(max_length=20, blank=True)
-    password = models.CharField(max_length=20, blank=True)
-    name = models.CharField(max_length=60, blank=True)
-    mobile_number = models.CharField(max_length=12, blank=True)
-    email = models.EmailField(blank=True)
-    address = models.CharField(max_length=100)
-    gender = models.CharField(choices=('male', 'female'))
-
-    def __str__(self):
-        return self.login
