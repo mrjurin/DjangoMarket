@@ -102,6 +102,7 @@ class SaleCoupon(_CouponBase):
 
     start_date = models.DateTimeField()
     expired_date = models.DateTimeField()
+
     class Meta:
         db_table = 'sale_coupon'
 
@@ -123,8 +124,8 @@ class ItemSaleCoupon(SaleCoupon):
 
 class CategorySaleCoupon(SaleCoupon):
     """
-    Item sale coupon additional information
-    TThis coupon can be used many times by each user
+    Category sale coupon additional information
+    This coupon can be used many times by each user
     Different item categories can have different sale value
     If value not set used default_value from SaleCoupon class
     """
