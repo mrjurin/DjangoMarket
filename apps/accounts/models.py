@@ -8,7 +8,7 @@ from django.db import models
 
 class User(AbstractUser):
 
-    name = models.CharField(max_length=60)
+    name = models.CharField(default='name', max_length=60)
     email = models.EmailField('Email address', unique=True)
 
     USERNAME_FIELD = 'email'
