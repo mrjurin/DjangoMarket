@@ -7,6 +7,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+
     name = models.CharField(max_length=60)
     email = models.EmailField('Email address', unique=True)
 
@@ -14,7 +15,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
-        ordering = ['name']
+        # ordering = ['name']
         verbose_name = 'User'
         verbose_name_plural = 'Users'
 
@@ -25,16 +26,17 @@ class User(AbstractUser):
         User.save(*args, **kwargs)
 
 
-class UserData(User):
+class UserData(models.Model):
 
-    GENDER_CHOICES = ("male", "female")
+    GENDER_CHOICES = (('MA',"male"), ('FE', "female"))
 
+    email = models.ForeignKey('User')
     login = models.CharField(max_length=20, unique=True)
     password = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=12, blank=True)
     address = models.CharField(max_length=100, blank=True)
     photo = models.ImageField(upload_to='accounts/photo', height_field=120, width_field=160)
-    gender = models.CharField(choices=GENDER_CHOICES, blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='')
 
     class Meta:
         ordering = ['login']
