@@ -3,7 +3,11 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
+<<<<<<< HEAD
+from django.utils.translation import ugettext as _
+=======
 from django.template.defaultfilters import slugify
+>>>>>>> master
 
 
 class BaseModel(models.Model):
@@ -17,3 +21,24 @@ class BaseModel(models.Model):
 
     def __unicode__(self):
         return self.__str__()
+<<<<<<< HEAD
+
+    
+class Cart(models.Model):
+
+    # Cart Model
+    
+    create_date = models.DateTimeField(auto_now_add=True, verbose_name=_('Creation Date'))
+    place_order = models.BooleanField(default=False, verbose_name=_('Place Order'))
+
+    order = models.ManyToManyField(Order)
+    product = models.ManyToManyField(Product)
+    subtotal_amount = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("Subtotal"))
+
+    class Meta(object):
+        verbose_name = _("Cart")
+        
+    def __unicode__(self):
+        return self.cart_id
+=======
+>>>>>>> master
