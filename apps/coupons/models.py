@@ -4,18 +4,15 @@ from datetime import datetime
 
 from django.db import models
 
-
-percent = 'P'
-natural = 'N'
-value_types = [percent, natural]
-
-
+# Абстрактні класи ми так підкреслюємо? Можна лінк на документацію, де це описано, самому цікаво.
 class _CouponBase(models.Model):
     """
     Base coupon model.
     By default all new coupons valid.
     Every model have conditions to set model not valid
     """
+    
+    # Міг наслідуватися від бейс модель і уникнути дублування.
     create_date = models.DateTimeField(auto_now_add=True, editable=False)
     update_date = models.DateTimeField(auto_now=True)
     delete_date = models.DateTimeField(null=True, blank=True, db_index=True)
@@ -23,8 +20,11 @@ class _CouponBase(models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
 
+    # Не факт що функція буде повертати стрінгу, треба чекнути, можливо що ось так потрібно
+    # str(uuid4().hex) - може щось типу так
     coupon_secret = models.CharField(default=uuid4(), editable=False)
 
+    
     is_valid = models.BooleanField(default=True)
 
     class Meta:
@@ -39,23 +39,31 @@ personal_gift = 'P'
 mass_gift = 'M'
 git_types = [personal_gift, mass_gift]
 
+# Треба міркувати, бо записувати в базу значення Р чи И якось дивно.
+percent = 'P'
+natural = 'N'
+value_types = [percent, natural]
 
 class GiftCoupon(_CouponBase):
     """
     Gift coupon
     """
-    value_type = models.CharField(
-        choices=value_types, max_length=1, default=natural, blank=False, null=False,
-        editable=False)
-    git_type = models.CharField(
-        choices=git_types, max_length=1, blank=False, null=False, editable=False)
+    value_type = models.CharField(choices=value_types, max_length=1,
+                                  default=natural, blank=False,
+                                  null=False, editable=False)
+    git_type = models.CharField(choices=git_types, max_length=1,
+                                blank=False, null=False, editable=False)
     value = models.PositiveIntegerField(blank=False)
+    
+    # Чому така дата?)
     expired_date = models.DateTimeField(default=datetime.max)
 
     class Meta:
+        # Навіщо вказувати як буде називатися таблиця, це лишня морока, джанго само справиться
         db_table = 'gift_coupon'
 
-
+        
+# Щось я тут юзера не бачу
 class UserGiftCoupon(models.Model):
     """
     User gift coupon additional information
@@ -66,9 +74,10 @@ class UserGiftCoupon(models.Model):
     used_date = models.DateTimeField(blank=True)
 
     class Meta:
+        # Тех саме, нам поки що не потрібно
         db_table = 'gift_user'
 
-
+# Щось не розумію чого так складно зроблено. Треба поміркувати, буду на роботі, отпишу якийсь варіант
 class PromoGiftCoupon(models.Model):
     """
     Promo gift coupon additional information
@@ -81,6 +90,7 @@ class PromoGiftCoupon(models.Model):
     class Meta:
         db_table = 'gift_promo'
 # endregion
+
 
 # region SaleCoupon
 item_sale = 'I'
