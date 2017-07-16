@@ -7,4 +7,6 @@ from django.contrib import admin
 
 from .models import Cart
 
+# Де кастом?
+
 admin.site.register(Cart)
