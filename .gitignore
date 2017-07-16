@@ -61,3 +61,5 @@ target/
 *.sqlite3
 secret_keys.py
 local_settings.py
+
+.DS_Store

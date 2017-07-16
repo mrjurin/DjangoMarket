@@ -3,28 +3,14 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
-<<<<<<< HEAD
 from django.utils.translation import ugettext as _
-=======
-from django.template.defaultfilters import slugify
->>>>>>> master
 
+from apps.core.models import BaseModel
+from apps.orders.models import Order
+from apps.products.models import Product
 
-class BaseModel(models.Model):
-    create_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
-    delete_date = models.DateTimeField(null=True, blank=True, db_index=True)
-
-    class Meta:
-        abstract = True
-        ordering = ["pk"]
-
-    def __unicode__(self):
-        return self.__str__()
-<<<<<<< HEAD
-
-    
-class Cart(models.Model):
+   
+class Cart(BaseModel):
 
     # Cart Model
     
@@ -33,12 +19,15 @@ class Cart(models.Model):
 
     order = models.ManyToManyField(Order)
     product = models.ManyToManyField(Product)
+    quantity = models.PositiveIntegerField(verbose_name=_("Quantity"))
+    unit_price = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("Unit Price"))
+    shipping_cost = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("Shipping Cost"))
+    tax_cost = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("TAX"))
     subtotal_amount = models.DecimalField(max_digits=50, decimal_places=2, verbose_name=_("Subtotal"))
 
     class Meta(object):
         verbose_name = _("Cart")
+        ordering = ['create_date']
         
     def __unicode__(self):
         return self.cart_id
-=======
->>>>>>> master

@@ -5,8 +5,6 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import User
-from .models import UserData
+from .models import Cart
 
-admin.site.register(User)
-admin.site.register(UserData)
+admin.site.register(Cart)
