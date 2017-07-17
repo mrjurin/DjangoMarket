@@ -5,9 +5,9 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from apps.core.models import BaseModel
-from apps.orders.models import Order
-from apps.products.models import Product
+from ..core.models import BaseModel
+from ..orders.models import Order
+from ..products.models import Product
 
    
 class Cart(BaseModel):
