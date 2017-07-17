@@ -26,7 +26,7 @@ class _CouponBase(models.Model):
 
     # Не факт що функція буде повертати стрінгу, треба чекнути, можливо що ось так потрібно
     # str(uuid4().hex) - може щось типу так
-    coupon_secret = models.CharField(default=uuid4(), editable=False)
+    coupon_secret = models.CharField(default=str(uuid4().hex), editable=False, max_length=64)
 
     
     is_valid = models.BooleanField(default=True)
@@ -43,10 +43,20 @@ personal_gift = 'P'
 mass_gift = 'M'
 git_types = [personal_gift, mass_gift]
 
+git_types = (
+    (personal_gift, "personal_gift"),
+    (mass_gift, 'mass_gift')
+)
+
 # Треба міркувати, бо записувати в базу значення Р чи И якось дивно.
 percent = 'P'
 natural = 'N'
 value_types = [percent, natural]
+
+value_types = (
+    (percent, "percent"),
+    (natural, 'natural')
+)
 
 
 class GiftCoupon(_CouponBase):
@@ -98,9 +108,15 @@ class PromoGiftCoupon(models.Model):
 
 
 # region SaleCoupon
+# Не правильно
 item_sale = 'I'
 category_sale = 'C'
-sale_types = [item_sale, category_sale]
+sale_types = (item_sale, category_sale)
+
+sale_types = (
+    (item_sale, "Item sale"),
+    (category_sale, 'category_sale')
+)
 
 
 class SaleCoupon(_CouponBase):
@@ -109,10 +125,8 @@ class SaleCoupon(_CouponBase):
     Coupon valid only after start date
     Coupon not valid after expired_date
     """
-    value_type = models.CharField(
-        choices=value_types, max_length=1, default=percent, blank=False, null=False)
-    sale_type = models.CharField(
-        choices=sale_types, max_length=1, blank=False, null=False)
+    value_type = models.CharField(choices=value_types, max_length=1, default=percent, blank=False, null=False)
+    sale_type = models.CharField(choices=sale_types, max_length=1, blank=False, null=False)
     default_value = models.PositiveIntegerField(blank=False)
 
     start_date = models.DateTimeField()
@@ -129,8 +143,8 @@ class ItemSaleCoupon(SaleCoupon):
     Different items can have different sale value
     If value not set used default_value from SaleCoupon class
     """
-    sale_coupon_id = models.ForeignKey('SaleCoupon')
-    product_id = models.ForeignKey('Product')
+    sale_coupon = models.ForeignKey('SaleCoupon', related_name='item_sale_coupon_related')
+    product = models.ForeignKey(Product, related_name='item_sale_product_related')
     value = models.PositiveIntegerField(blank=True, null=True)
 
     # class Meta:
@@ -144,8 +158,8 @@ class CategorySaleCoupon(SaleCoupon):
     Different item categories can have different sale value
     If value not set used default_value from SaleCoupon class
     """
-    sale_coupon_id = models.ForeignKey('SaleCoupon')
-    category_id = models.ForeignKey(Category)
+    sale_coupon = models.ForeignKey('SaleCoupon', related_name='category_sale_coupon_related')
+    category = models.ForeignKey(Category, related_name='category_coupon_related')
     value = models.PositiveIntegerField(blank=True, null=True)
 
     # class Meta:
