@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from apps.core.models import BaseModel
-from apps.coupons.models import ItemSaleCoupon
-from apps.products.models import Product
 from django.db import models
 from django.conf import settings
+from ..core.models import BaseModel
+from ..coupons.models import ItemSaleCoupon
+from ..products.models import Product
 
 
 class Order(BaseModel):
@@ -23,5 +23,5 @@ class Order(BaseModel):
         max_digits=10, decimal_places=2, verbose_name="Full price")
     created_date = models.DateTimeField(auto_now_add=True)
     sent_date = models.DateTimeField()
-    payment_cash = models.BooleanField(default=True, null=False, blank=False)
+    payment_cash = models.BooleanField(default=True)
 
