@@ -10,13 +10,13 @@ class User(AbstractUser):
 
     GENDER_CHOICES = (('MA', "male"), ('FE', "female"))
 
-    name = models.CharField(default='name {}'.format(id), max_length=60)
+    name = models.CharField(default='name{}'.format(id), max_length=60)
     email = models.EmailField('Email address', unique=True)
-    login = models.CharField(max_length=20, unique=True)
+    login = models.CharField(default='login', max_length=20, unique=True)
     password = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=13, blank=True)  # +380671111111 - 13 signs
     home_address = models.CharField(max_length=100, blank=True)
-    photo = models.ImageField(upload_to='accounts/photo', height_field=120, width_field=160)
+    photo = models.ImageField(upload_to='accounts/photo', height_field=120, width_field=160, blank=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='')
 
     USERNAME_FIELD = 'email'
@@ -30,5 +30,5 @@ class User(AbstractUser):
     def __unicode__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        User.save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     User.save(*args, **kwargs)
