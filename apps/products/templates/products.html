@@ -1,4 +1,11 @@
-{% for product in view.products %}
+<div class="row">
+  {% for product in view.products %}
   <a href="{% url 'product_detail' product_slug=product.slug%}">{{ product.name }}</a>
   {{ product.price }}
-{% endfor %}
+            <div class="col s12 m6 l3"><p>Notebooks</p></div>
+            <div class="col s12 m6 l3"><p>s12 m6 l3</p></div>
+            <div class="col s12 m6 l3"><p>s12 m6 l3</p></div>
+            <div class="col s12 m6 l3"><p>s12 m6 l3</p></div>
+  {% endfor %}
+
+</div>

@@ -4,16 +4,14 @@ from django.views.generic.detail import DetailView
 from apps.products.models import Product, Category
 
 
+
 class ProductsView(TemplateView):
     template_name = "products.html"
 
-    def products(self):
-        return Product.objects.all()
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProductsView, self).get_context_data(**kwargs)
-    #     context['products']= Product.objects.all()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(ProductsView, self).get_context_data(**kwargs)
+        context['products']= Product.objects.all()
+        return context
 
 
 class ProductDetailView(DetailView):
