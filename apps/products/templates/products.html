@@ -1,1 +1,4 @@
-Продукти!
+{% for product in view.products %}
+  <a href="{% url 'product_detail' product_slug=product.slug%}">{{ product.name }}</a>
+  {{ product.price }}
+{% endfor %}
