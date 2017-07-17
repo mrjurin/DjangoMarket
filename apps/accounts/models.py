@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     name = models.CharField(default='name{}'.format(id), max_length=60)
     email = models.EmailField('Email address', unique=True)
-    login = models.CharField(default='login', max_length=20, unique=True)
+    login = models.CharField(default='login{}'.format(id), max_length=20, unique=True)
     password = models.CharField(max_length=20)
     mobile_number = models.CharField(max_length=13, blank=True)  # +380671111111 - 13 signs
     home_address = models.CharField(max_length=100, blank=True)
