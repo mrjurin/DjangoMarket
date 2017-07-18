@@ -10,7 +10,7 @@ class User(AbstractUser):
 
     GENDER_CHOICES = (('MA', "male"), ('FE', "female"))
 
-    name = models.CharField(default='name{}'.format(id), max_length=60)
+    name = models.CharField(default='user', max_length=60)
     email = models.EmailField('Email address', unique=True)
     login = models.CharField(default='login{}'.format(id), max_length=20, unique=True)
     password = models.CharField(max_length=20)
@@ -28,7 +28,7 @@ class User(AbstractUser):
         verbose_name_plural = 'users'
 
     def __unicode__(self):
-        return self.name
+        return '{}#{}'.format(self.name, self.id)
 
     # def save(self, *args, **kwargs):
     #     User.save(*args, **kwargs)
