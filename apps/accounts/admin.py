@@ -13,7 +13,5 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ['name']
     search_fields = ['name', 'email']
 
-    class Meta:
-        model = User
-
-admin.site.register(User)
+    
+admin.site.register(User, UserAdmin)
