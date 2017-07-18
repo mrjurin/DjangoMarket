@@ -23,9 +23,9 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
+    # url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^admin/', admin.site.urls),
-    url(r'^products_app/', include('apps.products.urls'))
+    url(r'^', include('apps.products.urls'))
 ]
 
 # For static files

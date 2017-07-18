@@ -1,45 +1,65 @@
+from django.urls.base import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
-from apps.products.models import Product, Category
-
+from ..products.forms import ProductReviewForm
+from ..products.models import Product, Category, ProductReview
 
 
 class ProductsView(TemplateView):
-    template_name = "products.html"
+    template_name = 'products.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProductsView, self).get_context_data(**kwargs)
-        context['products']= Product.objects.all()
+        context['products'] = Product.objects.all()
         return context
 
 
 class ProductDetailView(DetailView):
     model = Product
+    context_object_name = 'product'
     slug_url_kwarg = 'product_slug'
     template_name = 'product_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+        form = ProductReviewForm()
+        context['form'] = form
+        return context
+
 
 class CategoriesView(TemplateView):
-    template_name = "categories.html"
+    template_name = "index.html"
 
-    def categories(self):
-        return Category.objects.all()
-
-
-class CategoryProductsView(TemplateView):
-    template_name = "category_products.html"
-
-    def category_products(self):
-        category_slug = self.kwargs['category_slug']
-        category = Category.objects.get(slug=category_slug)
-        return category.category_products.all()
+    def get_context_data(self, **kwargs):
+        context = super(CategoriesView, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
 class CategoryDetailView(DetailView):
     model = Category
+    context_object_name = 'category'
     slug_url_kwarg = 'category_slug'
     template_name = 'category_detail.html'
+
+
+class CreateProductReviewView(CreateView):
+    model = ProductReview
+    template_name = 'product_review.html'
+    form_class = ProductReviewForm
+
+    def form_valid(self, form):
+        product = Product.objects.get(slug=self.kwargs['product_slug'])
+        form.instance.product = product
+        return super(CreateProductReviewView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse("product_detail", kwargs={
+            "product_slug":self.kwargs['product_slug']
+        })
+
 
 
 
