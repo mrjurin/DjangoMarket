@@ -7,6 +7,7 @@ from ..products.models import Category
 from ..accounts.models import *
 from ..carts.models import *
 from ..orders.models import *
+from ..products.models import Product
 
 # Абстрактні класи ми так підкреслюємо? Можна лінк на документацію, де це описано, самому цікаво.
 class _CouponBase(models.Model):
