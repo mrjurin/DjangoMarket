@@ -15,7 +15,6 @@ class ProductAdmin(admin.ModelAdmin):
     ]
     prepopulated_fields = {'slug': ['name']}
 
-
     def save_model(self, request, obj, form, change):
         slug = slugify(obj.name)
         if obj.slug != slug:
@@ -32,10 +31,14 @@ class CategoryAdmin(admin.ModelAdmin):
         super(CategoryAdmin, self).save_model(request, obj, form, change)
 
 
+class ProductReviewAdmin(admin.ModelAdmin):
+    search_fields = ['product__name']
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(ProductImage)
 admin.site.register(Brand)
 admin.site.register(AttributeName)
 admin.site.register(AttributeValue)
-admin.site.register(ProductReview)
+admin.site.register(ProductReview, ProductReviewAdmin)
