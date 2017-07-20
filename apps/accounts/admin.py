@@ -7,6 +7,12 @@ from django.contrib import admin
 
 from .models import User
 
-# Де кастомні моделі?
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['id', 'username', 'email', 'first_name', 'last_name',
+                    'mobile_number', 'is_active', 'is_staff']
+    list_filter = ['username']
+    search_fields = ['username', 'email']
+
+    
+admin.site.register(User, UserAdmin)

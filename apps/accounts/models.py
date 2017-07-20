@@ -8,27 +8,26 @@ from django.db import models
 
 class User(AbstractUser):
 
-    GENDER_CHOICES = (('MA', "male"), ('FE', "female"))
+    GENDER_CHOICES = (('UN', 'unknown'), ('MA', "male"), ('FE', "female"))
 
-    name = models.CharField(default='name{}'.format(id), max_length=60)
-    email = models.EmailField('Email address', unique=True)
-    login = models.CharField(default='login', max_length=20, unique=True)
-    password = models.CharField(max_length=20)
+    # def default_username(self, **kwargs):
+    #     context = super(User, self).default_username(**kwargs)
+    #     context['username'] = 'user#%s' % self.id
+    #     return context['username']
+
+    username = models.CharField(max_length=50, unique=True)
+    # username = models.CharField(default=default_username(),
+    #                             max_length=50, unique=True)
+    password = models.CharField(default='00', max_length=20, blank=True)
     mobile_number = models.CharField(max_length=13, blank=True)  # +380671111111 - 13 signs
     home_address = models.CharField(max_length=100, blank=True)
     photo = models.ImageField(upload_to='accounts/photo', height_field=120, width_field=160, blank=True)
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='')
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='')
 
     class Meta:
-        ordering = ['name']
+        ordering = ['id']
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
     def __unicode__(self):
-        return self.name
-
-    # def save(self, *args, **kwargs):
-    #     User.save(*args, **kwargs)
+        return '{}#{}'.format(self.username, self.id)
