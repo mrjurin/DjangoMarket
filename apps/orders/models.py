@@ -10,18 +10,22 @@ from ..products.models import Product
 
 class Order(BaseModel):
 
+    class Meta:
+        ordering = ['-full_price']
+
     products = models.ManyToManyField(Product)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     coupon = models.ForeignKey(ItemSaleCoupon, null=True, blank=True,
                                verbose_name="Coupon")
     additional_information = models.TextField(
         max_length=450, null=True, blank=True)
-    # Кількість чього? продуктів? У нас і так вона є в продуктах
-    # RP: кількість продукту в замовленні, а не на складі.
     quantity = models.PositiveIntegerField(null=True, blank=True)
     full_price = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Full price")
     created_date = models.DateTimeField(auto_now_add=True)
     sent_date = models.DateTimeField()
     payment_cash = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return str(self.id)
 
