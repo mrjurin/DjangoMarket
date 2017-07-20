@@ -5,7 +5,14 @@
     <title>users</title>
 </head>
 <body>
+
 USERS
+{% for user in users %}
+	{% if user.is_superuser %}
+		{{ user }} = <STRONG> ADMIN </STRONG>
+	{% endif %}
+	{{ user }}
+{% endfor %}
 
 </body>
 </html>

@@ -14,7 +14,3 @@ class UsersView(TemplateView):
         context = super(UsersView, self).get_context_data(**kwargs)
         context['users'] = User.objects.all()
         return context
-
-    @staticmethod
-    def user_list(self, request):
-        return render(request, 'apps/accounts/users.html', {})
