@@ -13,6 +13,7 @@ class User(AbstractUser):
     def default_username(user):
         return 'user#{}'.format(user.id)
 
+    # FIXME Sasha Shmigelskii: create write default name look like "user#1, user#2, etc.
     username = models.CharField(default=default_username,
                                 max_length=50, unique=True)
     password = models.CharField(default='00', max_length=256, blank=True)
