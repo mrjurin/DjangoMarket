@@ -8,14 +8,13 @@ from django.db import models
 
 class User(AbstractUser):
 
-    GENDER_CHOICES = (('UN', 'unknown'), ('MA', "male"), ('FE', "female"))
+    GENDER_CHOICES = (('unknown', 'unknown'), ('male', "male"), ('female', "female"))
 
-    def default_username(user):
-        return 'user#{}'.format(user.id)
+    # def default_username(user):
+    #     return 'user#{}'.format(user.id)
 
     # FIXME Sasha Shmigelskii: create write default name look like "user#1, user#2, etc.
-    username = models.CharField(default=default_username,
-                                max_length=50, unique=True)
+    # username = models.CharField(max_length=50, unique=True)
     password = models.CharField(default='00', max_length=256, blank=True)
     mobile_number = models.CharField(max_length=13, blank=True)  # +380671111111 - 13 signs
     home_address = models.CharField(max_length=100, blank=True)
