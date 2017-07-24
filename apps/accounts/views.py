@@ -13,7 +13,7 @@ class UsersView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(UsersView, self).get_context_data(**kwargs)
-        context['users'] = User.objects.all()
+        context['users'] = User.get_all_users()
         return context
 
     def current_datetime(request):

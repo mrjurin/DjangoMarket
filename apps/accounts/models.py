@@ -34,4 +34,12 @@ class User(AbstractUser):
 
     @staticmethod
     def get_all_users():
-        return User.objects.filter()
+        return User.objects.all()
+
+    @staticmethod
+    def get_user_by_name(name):
+        return User.objects.filter(name=name).first()
+
+    def deactivation_user(self):
+        self.is_active=False
+        self.save()
