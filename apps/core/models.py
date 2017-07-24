@@ -15,4 +15,4 @@ class BaseModel(models.Model):
         ordering = ["pk"]
 
     def __unicode__(self):
-        return self.__str__()
+        return u"ASD"
